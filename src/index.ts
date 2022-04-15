@@ -2,8 +2,14 @@
  * Working on code that should work in Leetcode.
  */
 
-import { rotate } from "./rotate-image";
+import { mergeKLists } from "./merge-k-sorted-lists";
+import { arrayFromLinkedList, linkedListFromArray, ListNode } from "./_util";
 
-const matrix = [[1,2,3],[4,5,6],[7,8,9]];
-const result = rotate(matrix);
-
+const input: Array<ListNode<number>> = [
+  linkedListFromArray([1, 2, 3, 4])!,
+  linkedListFromArray([1, 4, 5])!,
+  linkedListFromArray([2, 3, 3])!,
+]
+const result = mergeKLists(input);
+const resultArr = arrayFromLinkedList(result!);
+console.log("Wow!");

@@ -15,32 +15,37 @@ export class ListNode<T> {
 /**
  * Initialize a linked list from an array of values.
  */
-export function constructLinkedListFromArray<T>(
+export function linkedListFromArray<T>(
   values: Array<T>
 ): ListNode<T> | null {
-  const firstNode = values.shift();
-  if (!firstNode) {
+  if (!values || values && values.length === 0) {
     return null;
   }
 
   // initialize the first node
-  const head: ListNode<T> = {
-    val: firstNode,
-    next: null,
-  };
+  let firstNode: ListNode<T> | null = null;
+  let currentNode: ListNode<T> | null = null;
 
-  let mover = head;
-  while (values.length > 0) {
-    const nextVal = values.shift();
-    if (nextVal) {
-      const nextNode = {
-        val: nextVal,
-        next: null,
-      }
-      mover.next = nextNode;
-      mover = nextNode;
+  for (const val of values) {
+    const newNode = new ListNode(val);
+    if (!firstNode) {
+      firstNode = newNode;
+    } else {
+      currentNode!.next = newNode;
     }
+    currentNode = newNode;
   }
 
-  return head;
+  return firstNode;
+}
+
+export const arrayFromLinkedList = <T>(node: ListNode<T>): Array<T> => {
+  const result: Array<T> = [];
+  let pointer: ListNode<T> | null = node;
+  while (pointer !== null) {
+    result.push(pointer.val);
+    pointer = pointer.next;
+  }
+
+  return result;
 }
