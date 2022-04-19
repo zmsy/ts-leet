@@ -2,14 +2,18 @@
  * Working on code that should work in Leetcode.
  */
 
-import { mergeKLists } from "./merge-k-sorted-lists";
-import { arrayFromLinkedList, linkedListFromArray, ListNode } from "./_util";
+import { maxSubArray } from "./maximum-subarray";
 
-const input: Array<ListNode<number>> = [
-  linkedListFromArray([1, 2, 3, 4])!,
-  linkedListFromArray([1, 4, 5])!,
-  linkedListFromArray([2, 3, 3])!,
-]
-const result = mergeKLists(input);
-const resultArr = arrayFromLinkedList(result!);
+const nums1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+const result1 = maxSubArray(nums1);
+
+const nums2 = [5, 4, -1, 7, 8];
+const result2 = maxSubArray(nums2);
+
+const nums3 = [1];
+const result3 = maxSubArray(nums3);
+
+const nums4 = [1, 2];
+const result4 = maxSubArray(nums4);
+
 console.log("Wow!");

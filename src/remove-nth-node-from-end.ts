@@ -9,9 +9,9 @@ import { ListNode } from "./_util";
  * the end of the list and return its head.
  */
 export function removeNthFromEnd(
-  head: ListNode<number> | null,
+  head: ListNode | null,
   n: number
-): ListNode<number> | null {
+): ListNode | null {
   let lead = head;
   let follow = head;
   for (let i = 0; i < n; i++) {

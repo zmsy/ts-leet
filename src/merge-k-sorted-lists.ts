@@ -12,10 +12,10 @@ import { linkedListFromArray, ListNode } from "./_util";
  */
 
 export function mergeKLists(
-  lists: Array<ListNode<number> | null>
-): ListNode<number> | null {
+  lists: Array<ListNode | null>
+): ListNode | null {
   const result: Array<number> = [];
-  let cache = new Map<number, ListNode<number> | null>();
+  let cache = new Map<number, ListNode | null>();
   lists.forEach((i, idx) => cache.set(idx, i));
 
   /** Find the current smallest key in the cache. */

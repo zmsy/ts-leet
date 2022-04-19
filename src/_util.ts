@@ -3,10 +3,10 @@
  */
 
 /** ListNode class definition for iterating. */
-export class ListNode<T> {
-  val: T;
-  next: ListNode<T> | null;
-  constructor(val: T, next?: ListNode<T> | null) {
+export class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val: number, next?: ListNode | null) {
     this.val = val;
     this.next = next === undefined ? null : next;
   }
@@ -15,16 +15,16 @@ export class ListNode<T> {
 /**
  * Initialize a linked list from an array of values.
  */
-export function linkedListFromArray<T>(
-  values: Array<T>
-): ListNode<T> | null {
+export function linkedListFromArray(
+  values: Array<number>
+): ListNode | null {
   if (!values || values && values.length === 0) {
     return null;
   }
 
   // initialize the first node
-  let firstNode: ListNode<T> | null = null;
-  let currentNode: ListNode<T> | null = null;
+  let firstNode: ListNode | null = null;
+  let currentNode: ListNode | null = null;
 
   for (const val of values) {
     const newNode = new ListNode(val);
@@ -39,9 +39,9 @@ export function linkedListFromArray<T>(
   return firstNode;
 }
 
-export const arrayFromLinkedList = <T>(node: ListNode<T>): Array<T> => {
-  const result: Array<T> = [];
-  let pointer: ListNode<T> | null = node;
+export const arrayFromLinkedList = (node: ListNode): Array<number> => {
+  const result: Array<number> = [];
+  let pointer: ListNode | null = node;
   while (pointer !== null) {
     result.push(pointer.val);
     pointer = pointer.next;
