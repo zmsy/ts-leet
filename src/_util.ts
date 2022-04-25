@@ -12,13 +12,22 @@ export class ListNode {
   }
 }
 
+export class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
+  }
+}
+
 /**
  * Initialize a linked list from an array of values.
  */
-export function linkedListFromArray(
-  values: Array<number>
-): ListNode | null {
-  if (!values || values && values.length === 0) {
+export function linkedListFromArray(values: Array<number>): ListNode | null {
+  if (!values || (values && values.length === 0)) {
     return null;
   }
 
@@ -48,4 +57,4 @@ export const arrayFromLinkedList = (node: ListNode): Array<number> => {
   }
 
   return result;
-}
+};
