@@ -11,16 +11,18 @@
  * @param target
  */
 export function twoSum(nums: number[], target: number): number[] {
-  // key = array value, value = array index
-  const hashes: Record<number, number> = {};
-  for (const [idx, n] of nums.entries()) {
-    const complement = hashes[target - n];
-    if (complement !== undefined) {
-      // if found, return the value and the index
-      return [idx, complement];
+  const valueToIndex: Record<number, number> = {};
+  for (const [index, num] of nums.entries()) {
+    // the complement is what this adds up to in order to get the target
+    const complement = target - num;
+    const complementIdx = valueToIndex[complement];
+    if (complementIdx !== undefined) {
+      return [index, complementIdx];
     } else {
-      hashes[n] = idx;
+      valueToIndex[num] = index;
     }
   }
+
+  // no solution exists, make the compiler happy
   return [];
 }

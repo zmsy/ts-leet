@@ -2,7 +2,10 @@
  * Working on code that should work in Leetcode.
  */
 
-import { letterCombinations } from "./letter-combinations-of-phone-number";
+import { twoSum } from "./two-sum";
 
-const test1 = "23";
-const combinations = letterCombinations(test1);
+const nums = [2, 7, 11, 15];
+const target = 9;
+
+const result = twoSum(nums, target);
+console.log();
