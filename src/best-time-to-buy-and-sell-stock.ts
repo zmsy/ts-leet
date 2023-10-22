@@ -8,19 +8,20 @@
  *
  * Return the maximum profit you can achieve from this
  * transaction. If you cannot achieve any profit, return 0.
+ *
+ * Comments: Loop through and keep track of 1. minimum so far and 2. best profit so far.
  */
 export function maxProfit(prices: number[]): number {
   if (prices.length < 2) {
     return 0;
   }
 
-  let best = 0;
-  let min = prices[0];
+  let minimum = prices[0];
+  let bestProfit = 0;
   for (let i = 1; i < prices.length; i++) {
-    const price = prices[i];
-    min = Math.min(min, price);
-    best = Math.max(best, price - min);
+    bestProfit = Math.max(prices[i] - minimum, bestProfit);
+    minimum = Math.min(minimum, prices[i]);
   }
 
-  return best;
-};
+  return bestProfit;
+}
