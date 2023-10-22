@@ -11,7 +11,7 @@ assertEquals(result1, 3);
 const result2 = lengthOfLongestSubstring("bbbbb");
 assertEquals(result2, 1);
 
-const result3 = lengthOfLongestSubstring("pwwkew");
+const result3 = lengthOfLongestSubstring("au");
 assertEquals(result3, 3);
 
 console.log();

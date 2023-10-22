@@ -2,39 +2,33 @@
  * Given an integer array nums, return all the triplets
  * [nums[i], nums[j], nums[k]] such that i != j, i != k,
  * and j != k, and nums[i] + nums[j] + nums[k] == 0.
- * 
+ *
  * Notice that the solution set must not contain duplicate triplets.
- * @param nums 
+ * @param nums
  */
 export function threeSum(nums: number[]): number[][] {
-
-  // edge case - cannot be 3 sum if there are not three
-  // integers
+  // no solutions if there's not three numbers.
   if (nums.length < 3) {
     return [];
   }
 
-  // outputs are stored as strings of 3 values
-  // `{i}-{j}-{k}` as a way of easy comparability
+  // sort the list so the triples are in order
+  nums.sort((a, b) => a - b);
+
+  // store the indices as string-encoded JSON
   const outputs = new Set<string>();
 
-  // sort the nums such that the iterative looping in
-  // n^2 * n log n instead of n^3
-  nums.sort((a, b) => a - b)
-
-  // loop through the individual numbers at each point
-  // nums.length - 2 is for l & r pointers
-  for (let i = 0; i < (nums.length - 2); i++) {
+  for (let i = 0; i < nums.length - 2; i++) {
     let j = i + 1;
     let k = nums.length - 1;
 
     while (j < k) {
-      const sum = nums[i] + nums[j] + nums[k];
-      if (sum === 0) {
-        outputs.add(JSON.stringify([nums[i], nums[j], nums[k]]));
+      const value = nums[i] + nums[j] + nums[k];
+      if (value === 0) {
+        outputs.add([nums[i], nums[j], nums[k]].join("||"));
         k--;
         j++;
-      } else if (sum > 0) {
+      } else if (value > 0) {
         k--;
       } else {
         j++;
@@ -42,5 +36,5 @@ export function threeSum(nums: number[]): number[][] {
     }
   }
 
-  return [...outputs].map((i) => JSON.parse(i));
-};
+  return [...outputs].map((val) => val.split("||").map((val) => Number(val)));
+}
