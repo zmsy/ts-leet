@@ -2,6 +2,12 @@
  * Reusable utility functions.
  */
 
+export function assertEquals<T>(left: T, right: T): void {
+  if (left !== right) {
+    throw new Error(`assertEquals error: ${left} does not equal ${right}.`);
+  }
+}
+
 /** ListNode class definition for iterating. */
 export class ListNode {
   val: number;
