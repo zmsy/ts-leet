@@ -9,17 +9,41 @@
  * surrounded by water.
  */
 export function numIslands(grid: string[][]): number {
-  if (!grid.length) return 0;
-  if (!grid[0].length) return 0;
+  // must be at least a 1x1 grid in order to work.
+  if (grid.length === 0) return 0;
+  if (grid[0].length === 0) return 0;
 
-  // visited islands are serialized as a set of coordinates {0}.{1}
+  // dimensions. m = height, n = width
   const m = grid.length;
   const n = grid[0].length;
   const visited = new Set<string>();
-  const coords = (i: number, j: number) => `${i}.${j}`;
+  const coordStr = (i: number, j: number) => `${i}.${j}`;
   let islands = 0;
 
-  // neighbors getter helper function
+  // depth first search marking off every visited islands into
+  // the `visited` set.
+  const dfs = (i: number, j: number) => {
+    const stack: Array<[number, number]> = [[i, j]];
+    while (stack.length > 0) {
+      // pop from the stack so that it's DFS
+      const coords = stack.pop()!;
+      visited.add(coordStr(...coords));
+
+      // search through all of the neighbors after this node.
+      const neighbors = getNeighbors(...coords);
+      for (const neighbor of neighbors) {
+        const coords = coordStr(...neighbor);
+        if (!visited.has(coords) && grid[neighbor[0]][neighbor[1]] === "1") {
+          stack.push(neighbor);
+        }
+      }
+    }
+  };
+
+  /**
+   * Return all of the valid neighbors for this particular
+   * coordinate, limiting to the existing spaces.
+   */
   const getNeighbors = (i: number, j: number): Array<[number, number]> => {
     const neighbors: Array<[number, number]> = [
       [i - 1, j],
@@ -27,30 +51,13 @@ export function numIslands(grid: string[][]): number {
       [i, j - 1],
       [i, j + 1],
     ];
-    return neighbors.filter(([i, j]) => {
-      return i >= 0 && i < m && j >= 0 && j < n;
-    });
+    return neighbors.filter(([i, j]) => i >= 0 && j >= 0 && i < m && j < n);
   };
 
-  // depth first search helper function
-  const dfs = (i: number, j: number): void => {
-    const stack: Array<[number, number]> = [[i, j]];
-    while (stack.length > 0) {
-      const node = stack.pop()!;
-      visited.add(coords(...node));
-      const neighbors = getNeighbors(...node);
-      for (const n of neighbors) {
-        if (grid[n[0]][n[1]] === "1" && !visited.has(coords(...n))) {
-          stack.push(n);
-        }
-      }
-    }
-  };
-
-  // loop through the grid and dfs at each point we reach an island.
+  // loop through all of the available spaces
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
-      if (grid[i][j] === "1" && !visited.has(coords(i, j))) {
+      if (grid[i][j] === "1" && !visited.has(coordStr(i, j))) {
         islands += 1;
         dfs(i, j);
       }
