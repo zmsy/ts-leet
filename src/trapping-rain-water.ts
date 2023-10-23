@@ -1,39 +1,34 @@
-
 export function trap(height: number[]): number {
-  if (!height.length) {
+  if (height.length < 1) {
     return 0;
   }
 
-  // keep l & r pointers, as well as highest seen
-  // for both l & r.
+  // L & R pointers + maximum heights
   let l = 0;
   let r = height.length - 1;
-  let maxLeft = 0;
-  let maxRight = 0;
-  let output = 0;
+  let lMax = 0;
+  let rMax = 0;
+  let total = 0;
+
   while (l < r) {
-    // check if L or R is higher.
     if (height[l] <= height[r]) {
-      // if this height is higher, it means we need to
-      // increment the left pointer.
-      if (height[l] >= maxLeft) {
-        maxLeft = height[l];
+      if (height[l] >= lMax) {
+        lMax = height[l];
       } else {
-        // Otherwise, it means we're closer to the center
-        // than the highest point, and we should collect
-        // the water from this column.
-        output += maxLeft - height[l];
+        // otherwise, collect the rainwater we've seen
+        // so far.
+        total += lMax - height[l];
       }
       l++;
     } else {
-      if (height[r] >= maxRight) {
-        maxRight = height[r]
+      if (height[r] >= rMax) {
+        rMax = height[r];
       } else {
-        output += maxRight - height[r];
+        total += rMax - height[r];
       }
       r--;
     }
   }
 
-  return output;
-};
+  return total;
+}
