@@ -15,7 +15,7 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
-            "preLaunchTask": "npm: build",
+            "preLaunchTask": "npm: build"
         },
         {
             "type": "node",
@@ -28,7 +28,27 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
+            "preLaunchTask": "npm: build"
+        },
+        {
+            "type": "node",
+            "name": "vscode-jest-tests.v2",
+            "request": "launch",
+            "args": [
+                "--runInBand",
+                "--watchAll=false",
+                "--testNamePattern",
+                "${jest.testNamePattern}",
+                "--runTestsByPath",
+                "${jest.testFile}",
+                "--config",
+                "${workspaceRoot}/jest.config.js"
+            ],
+            "cwd": "/Users/zach/x/ts-leet",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
             "preLaunchTask": "npm: build",
+            "program": "/Users/zach/x/ts-leet/node_modules/.bin/jest"
         }
     ]
 }

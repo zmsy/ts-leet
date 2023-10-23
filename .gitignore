@@ -1,3 +1,6 @@
 node_modules
 dist
 leetcode-patterns.csv
+src/**.d.ts
+src/**.js
+src/**.js.map
