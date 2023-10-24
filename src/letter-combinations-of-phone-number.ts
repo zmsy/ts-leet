@@ -20,18 +20,25 @@ export function letterCombinations(digits: string): string[] {
     ["9", ["w", "x", "y", "z"]],
   ]);
 
-  if (!digits) return [];
-  let combos: Array<string> = phoneLetters.get(digits[0])!;
-  for (let i = 1; i < digits.length; i++) {
-    const newCombos: Array<string> = [];
-    const newLetters = phoneLetters.get(digits[i])!;
-    for (const c of combos) {
-      for (const l of newLetters) {
-        newCombos.push(c + l);
-      }
-    }
-    combos = newCombos;
+  if (digits === "") {
+    return [];
   }
 
-  return combos;
-};
+  const outputs: Array<string> = [];
+  const backtrack = (combo: string, index: number) => {
+    // if there's no additional digit, this is a leaf node.
+    const digit = digits.at(index);
+    if (digit === undefined) {
+      outputs.push(combo);
+    } else {
+      const letters = phoneLetters.get(digit)!;
+      for (const letter of letters) {
+        backtrack(`${combo}${letter}`, index + 1);
+      }
+    }
+  };
+
+  backtrack("", 0);
+
+  return outputs;
+}
