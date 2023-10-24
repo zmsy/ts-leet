@@ -54,7 +54,11 @@ export function linkedListFromArray(values: Array<number>): ListNode | null {
   return firstNode;
 }
 
-export const arrayFromLinkedList = (node: ListNode): Array<number> => {
+export const arrayFromLinkedList = (node: ListNode | null): Array<number> => {
+  if (node === null) {
+    return [];
+  }
+
   const result: Array<number> = [];
   let pointer: ListNode | null = node;
   while (pointer !== null) {
