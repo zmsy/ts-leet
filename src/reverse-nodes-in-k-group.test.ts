@@ -1,4 +1,4 @@
-import { ListNode, arrayFromLinkedList, linkedListFromArray } from "./_util";
+import { arrayFromLinkedList, linkedListFromArray } from "./_util";
 import { reverseKGroup } from "./reverse-nodes-in-k-group";
 
 describe("reverseKGroup", () => {

@@ -27,18 +27,18 @@ export function reverseKGroup(
 
   // create a placeholder node to start with. Use a signal value to make
   // it obvious if I've screwed up.
-  const dummy = new ListNode(-Infinity);
-  dummy.next = head;
+  const sentinel = new ListNode(-Infinity);
+  sentinel.next = head;
 
   let hasEnded = false;
 
   // start is the node _before_ this k-group, later is the one after.
-  let start: ListNode | null = dummy;
+  let start: ListNode | null = sentinel;
   let end: ListNode | null = null;
   while (!hasEnded) {
     // iterate k times forward. if we reach the end, break so that this
     // portion is not reversed.
-    let iterator = start!.next;
+    let iterator: ListNode | null = start;
     for (let i = 0; i < k; i++) {
       if (!iterator) {
         hasEnded = true;
@@ -58,11 +58,11 @@ export function reverseKGroup(
     end = iterator?.next ?? null;
 
     // if we haven't reached the end of the list, reverse the portion
-    // we're looking at, starting with the dummy
-    // start!.next = node2;
+    // we're looking at, starting with the dummy. this only does k - 1
+    // iterations to only flip members within the same group
     let node1: ListNode | null = start!.next;
     let node2: ListNode | null = node1?.next ?? null;
-    for (let i = 0; i < k; i++) {
+    for (let i = 0; i < k - 1; i++) {
       const node3 = node2?.next ?? null;
       node2!.next = node1;
       node1 = node2;
@@ -71,9 +71,9 @@ export function reverseKGroup(
 
     // point the original start to the end
     start!.next!.next = end;
-    start!.next = node2;
+    start!.next = node1;
     start = node2;
   }
 
-  return dummy.next;
+  return sentinel.next;
 }
