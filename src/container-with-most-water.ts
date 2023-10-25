@@ -10,24 +10,23 @@
  *
  * Notice that you may not slant the container.
  */
-function maxArea(height: number[]): number {
-  if (!height.length) {
+export function maxArea(height: number[]): number {
+  if (height.length < 2) {
     return 0;
   }
 
-  let best = 0;
   let i = 0;
   let j = height.length - 1;
-  while (i < j) {
-    best = Math.max(
-      best,
-      (j - i) * Math.min(height[i], height[j])
-    )
+  let best = 0;
 
-    if (height[i] < height[j]) {
-      i += 1;
+  while (i < j) {
+    const volume = (j - i) * Math.min(height[i], height[j]);
+    best = Math.max(best, volume);
+
+    if (height[i] > height[j]) {
+      j--;
     } else {
-      j += 1;
+      i++;
     }
   }
 
