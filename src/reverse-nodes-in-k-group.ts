@@ -35,6 +35,7 @@ export function reverseKGroup(
   // start is the node _before_ this k-group, later is the one after.
   let start: ListNode | null = sentinel;
   let end: ListNode | null = null;
+
   while (!hasEnded) {
     // iterate k times forward. if we reach the end, break so that this
     // portion is not reversed.
@@ -71,8 +72,13 @@ export function reverseKGroup(
 
     // point the original start to the end
     start!.next!.next = end;
+    const tempNext: ListNode | null = start!.next;
     start!.next = node1;
-    start = node2;
+    start = tempNext;
+  }
+
+  if (end) {
+    start!.next = end;
   }
 
   return sentinel.next;
