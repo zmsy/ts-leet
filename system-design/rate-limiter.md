@@ -50,13 +50,17 @@ Requirements:
 
 - **INCR** operation is atomic, and returns the value after incrementing. https://redis.io/commands/incr/
 - One can use a lua script _in_ redis to achieve most of the other approaches
+- Sorted set token bucket, in a single `MULTI` in redis:
+    - Drop old requests with `ZREMRANGEBYSCORE`
+    - Fetch all elements of the set with `ZRANGE(0, -1)`
+    - Add current request timestamp with `ZADD`
+    - Set a TTL equivalent to rate-limiting interval
 
 ## Distributed systems issues
 
 - Clients may not necessarily reach the same application server, or the same datacenter.
     - You can use a hash of some value to determine which rate-limiter for a given request.
     - Split rate-limiters up on a per-application, or per-partition basis.
-    - 
 - A service can end up in race conditions if the rate-limiting is done as part of a two-phase approach (read and _then_ write) because the counter may not be accurate afterwards.
 - These are all application-level descriptions, where you can do lower level if desired. IPTables has some capabilities here.
 - On the client-side, make sure to add sufficient backoff/retry logic.
