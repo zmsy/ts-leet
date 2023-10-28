@@ -14,7 +14,6 @@ export function exist(board: string[][], word: string): boolean {
   const m = board.length;
   const n = board[0].length;
   const coords = (i: number, j: number) => `${i}.${j}`;
-  let charIdx = 0; // iterator for the word
 
   /** Return all neighbors for a given coordinate. */
   const getNeighbors = (i: number, j: number): Array<[number, number]> => {
