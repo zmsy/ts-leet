@@ -1,6 +1,10 @@
 /**
  * Similar to word search, but this time we pass a list of words down to the
  * next level at each point.
+ *
+ * NOTES: I realized pretty early on that this would require a Trie but I really
+ * didn't want to implement it. If I do this again, I'll need to do that because
+ * a long word list causes this to be non-performant.
  */
 export function findWords(board: string[][], words: string[]): string[] {
   if (board.length === 0 || board[0].length === 0 || words.length === 0) {

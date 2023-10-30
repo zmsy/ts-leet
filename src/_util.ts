@@ -68,3 +68,95 @@ export const arrayFromLinkedList = (node: ListNode | null): Array<number> => {
 
   return result;
 };
+
+export const treeFromArray = (array: Array<number | null>): TreeNode | null => {
+  if (array.length === 0) {
+    return null;
+  }
+
+  const root = new TreeNode(array[0] as number);
+  const queue: TreeNode[] = [root];
+  let i = 1;
+
+  while (i < array.length) {
+    const current = queue.shift();
+    if (!current) {
+      break;
+    }
+
+    if (array[i] !== null) {
+      current.left = new TreeNode(array[i] as number);
+      queue.push(current.left);
+    }
+    i++;
+
+    if (i < array.length && array[i] !== null) {
+      current.right = new TreeNode(array[i] as number);
+      queue.push(current.right);
+    }
+    i++;
+  }
+
+  return root;
+};
+
+export const arrayFromTree = (root: TreeNode | null): (number | null)[] => {
+  if (!root) {
+    return [];
+  }
+
+  const result: (number | null)[] = [];
+  const queue: (TreeNode | null)[] = [root];
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+
+    if (current) {
+      result.push(current.val);
+      queue.push(current.left);
+      queue.push(current.right);
+    } else {
+      result.push(null);
+    }
+  }
+
+  // Remove trailing null values
+  while (result[result.length - 1] === null) {
+    result.pop();
+  }
+
+  return result;
+};
+
+export const treeDiagramString = (
+  root: TreeNode | null,
+  prefix = "",
+  isLeft = true,
+  str = ""
+): string => {
+  if (!root) {
+    return str;
+  }
+
+  if (root.right) {
+    str = treeDiagramString(
+      root.right,
+      prefix + (isLeft ? "│   " : "    "),
+      false,
+      str
+    );
+  }
+
+  str += prefix + (isLeft ? "└── " : "┌── ") + root.val + "\n";
+
+  if (root.left) {
+    str = treeDiagramString(
+      root.left,
+      prefix + (isLeft ? "    " : "│   "),
+      true,
+      str
+    );
+  }
+
+  return str;
+};
