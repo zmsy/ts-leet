@@ -1,4 +1,4 @@
-import { findOrder } from "./course-schedule";
+import { findOrder } from "./course-schedule-ii";
 
 describe("findOrder", () => {
   test("test-1", () => {
