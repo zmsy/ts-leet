@@ -1,7 +1,7 @@
 /**
  Do not return anything, modify matrix in-place instead.
  */
-export function setMatrixZeroes(matrix: number[][]): void {
+export function setZeroes(matrix: number[][]): void {
   // store rows and columns where there's a zero found
   const cols = new Set<number>();
   const rows = new Set<number>();
@@ -24,7 +24,7 @@ export function setMatrixZeroes(matrix: number[][]): void {
 
   for (let i = 0; i < rowLen + 1; i++) {
     for (let j = 0; j < colLen + 1; j++) {
-      if (rows.has(i) || rows.has(j)) {
+      if (rows.has(i) || cols.has(j)) {
         matrix[i][j] = 0;
       }
     }
