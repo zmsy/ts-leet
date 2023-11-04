@@ -9,39 +9,25 @@
  *   string and check for partitions.
  */
 export function partition(s: string): string[][] {
-  const recurse = (part: string): string[][] => {
-    if (part.length === 0) {
-      return [];
+  const outputs: string[][] = [];
+
+  const recurse = (idx: number, array: string[]): void => {
+    // null case, we've gone past the end. Win!
+    if (idx === s.length) {
+      outputs.push(array);
+      return;
     }
 
-    if (part.length === 1) {
-      return [[part]];
+    for (let i = idx; i < s.length; i++) {
+      const slice = s.slice(idx, i + 1);
+      if (isPalindrome(slice)) {
+        recurse(i + 1, [...array, slice]);
+      }
     }
-
-    const outputs = new Set<string>();
-    if (isPalindrome(part)) {
-      outputs.add(JSON.stringify([part]));
-    }
-
-    // recurse into lower levels and check each for palindrome
-    for (let i = 1; i < part.length; i++) {
-      // split the string into two parts, front and back.
-      const firstPartPalindromes = recurse(part.slice(0, i));
-      const secondPartPalindromes = recurse(part.slice(i));
-
-      // add all of the splits together in their different forms to create new
-      // combinations.
-      firstPartPalindromes.forEach((pal1) => {
-        secondPartPalindromes.forEach((pal2) => {
-          outputs.add(JSON.stringify([...pal1, ...pal2]));
-        });
-      });
-    }
-
-    return Array.from(outputs).map((x) => JSON.parse(x));
   };
 
-  return recurse(s);
+  recurse(0, []);
+  return outputs;
 }
 
 function isPalindrome(possible: string): boolean {
