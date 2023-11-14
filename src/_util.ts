@@ -18,6 +18,7 @@ export class ListNode {
   }
 }
 
+/** TreeNode for tree problems. */
 export class TreeNode {
   val: number;
   left: TreeNode | null;
@@ -27,6 +28,55 @@ export class TreeNode {
     this.left = left === undefined ? null : left;
     this.right = right === undefined ? null : right;
   }
+}
+
+/** Graph node for graph problems. */
+export class Node {
+  val: number;
+  neighbors: Node[];
+  constructor(val?: number, neighbors?: Node[]) {
+    this.val = val ?? 0;
+    this.neighbors = neighbors ?? [];
+  }
+}
+
+/**
+ * Initialize a graph from an adjacency list.
+ */
+export function graphFromAdjacencyList(adjacencyList: number[][]): Node[] {
+  const nodes: Node[] = [];
+
+  // Create nodes
+  for (let i = 0; i < adjacencyList.length; i++) {
+    nodes[i] = new Node(i + 1);
+  }
+
+  // Connect neighbors
+  for (let i = 0; i < adjacencyList.length; i++) {
+    const current = nodes[i];
+    const neighborsIndices = adjacencyList[i];
+
+    for (const neighborIndex of neighborsIndices) {
+      const neighbor = nodes[neighborIndex - 1];
+      current.neighbors.push(neighbor);
+    }
+  }
+
+  return nodes;
+}
+
+/**
+ * Derive the adjacency list from a graph node.
+ */
+function createAdjacencyList(graph: Node[]): number[][] {
+  const adjacencyList: number[][] = [];
+
+  for (const node of graph) {
+    const neighborsIndices = node.neighbors.map((neighbor) => neighbor.val);
+    adjacencyList.push(neighborsIndices);
+  }
+
+  return adjacencyList;
 }
 
 /**
