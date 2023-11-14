@@ -1,4 +1,4 @@
-import { rankTeams } from "./rank-teams";
+import { rankTeams } from "./rank-teams-by-votes";
 
 describe("rankTeams", () => {
   test("test-1", () => {
