@@ -2,6 +2,10 @@
  * Reusable utility functions.
  */
 
+export function printMatrix<T>(vals: T[][]): void {
+  console.log("\n" + vals.map((row) => row.join("")).join("\n"));
+}
+
 export function assertEquals<T>(left: T, right: T): void {
   if (left !== right) {
     throw new Error(`assertEquals error: ${left} does not equal ${right}.`);
