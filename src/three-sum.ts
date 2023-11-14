@@ -16,25 +16,47 @@ export function threeSum(nums: number[]): number[][] {
   nums.sort((a, b) => a - b);
 
   // store the indices as string-encoded JSON
-  const outputs = new Set<string>();
+  const outputs: Array<[number, number, number]> = [];
 
-  for (let i = 0; i < nums.length - 2; i++) {
+  let i = 0;
+  while (i < nums.length - 2) {
     let j = i + 1;
     let k = nums.length - 1;
 
     while (j < k) {
       const value = nums[i] + nums[j] + nums[k];
       if (value === 0) {
-        outputs.add([nums[i], nums[j], nums[k]].join("||"));
+        outputs.push([nums[i], nums[j], nums[k]]);
+
+        // move pointers forward as far as possible
         k--;
+        while (j < k && nums[k] === nums[k + 1]) {
+          k--;
+        }
+
         j++;
+        while (j < k && nums[j] === nums[j - 1]) {
+          j++;
+        }
       } else if (value > 0) {
         k--;
+        while (j < k && nums[k] === nums[k + 1]) {
+          k--;
+        }
       } else {
         j++;
+        while (j < k && nums[j] === nums[j - 1]) {
+          j++;
+        }
       }
+    }
+
+    // move up as much as we can on this single pass for duplicates.
+    i++;
+    while (i < nums.length - 2 && nums[i] === nums[i - 1]) {
+      i++;
     }
   }
 
-  return [...outputs].map((val) => val.split("||").map((val) => Number(val)));
+  return outputs;
 }
