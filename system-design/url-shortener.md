@@ -19,6 +19,11 @@ API:
 
 Service should return a 301 when called, since that indicates a permanent redirect (302 is temporary).
 
+## Notes on Implementation
 
+- SHA-256 has 2^256 space, so the chances of a collision are astronomically low. in the event that happens, we can use open-addressing like a hashmap.
+- It's not an n-choose-k problem, because that's for combinations and permutations are fine. 
+- Hash-chaining, aka using multiple hashes, is a valid way to avoid collisions even further.
+- 
 
 

@@ -61,6 +61,17 @@ Services these days are often containerized and run in some sort of control plan
     - Strengths: Client defines the query, nice frameworks, graphiql playground, type generation
     - Cons: Running it is miserable, n + 1 problems, federation is hard, [performance is awful in node](https://www.softwareatscale.dev/p/the-hidden-performance-cost-of-nodejs)
 
+
+#### Authentication & Security
+
+Authentication = users are who they claim they are
+Authorization = users can do X/Y
+
+- If you can, don't store passwords in your database. Prefer to use authenticatino from a provider, like AWS Cognito or Okta/Auth0.
+- If you have to store them in your database, use a known crypto framework for salting & hashing your passwords.
+- Using session tokens is up to you, if there's something particularly important for you to know. If you've got an access token, a common method of doing that is to store it in browser sessionStorage and use something like `axios` to send the header with every request to the service.
+- On the backend, use a verification middleware that checks the authorization prior to sending it anywhere.
+
 ### Database
 
 Data-layer is often one of the most important decisions that occurs, and can make or break your application.
@@ -105,5 +116,25 @@ Go for SQL first!
 
 ## Scaling The Service
 
+Horizontal Scaling:
+
+- Adding more servers to split the load out among many services.
+- This can be super useful for state-lite things like cache or app layers, but super difficult for things like database (requires sharding, etc)
+- Multiple app servers should really be the default configuration for any first scaling attempt.
+
+Vertical Scaling:
+
+- Throw more CPU/GPU/Disk/Memory/etc at it!
+- Works _very_ well for databases for a lot longer than application services.
+- Straight up impossible to do after a certain point.
+- Can lead to single points of failure.
+
+### CAP Theorem
+
+You can have 2 out of 3 of:
+
+- Consistency - Every node will have access to updated data
+- Availability - System is always available to users
+- Partition tolerance - System can deal with network faults or distribution
 
 
